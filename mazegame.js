@@ -1,11 +1,10 @@
 
-
 // === Configuration ===
-const MAZE_SIZE = 21; // An odd number
+const MAZE_SIZE = 21; // Must be an odd number
 const CELL_SIZE = 5; // Size of each maze cell
 const WALL_HEIGHT = 5;
 const PLAYER_SIZE = 2;
-const MOVE_SPEED = 0.2;
+const MOVE_SPEED = 0.4;
 
 // === Three.js Setup ===
 const scene = new THREE.Scene();
@@ -101,9 +100,10 @@ player.position.set(
 );
 scene.add(player);
 
-// === Camera Positioning ===
-camera.position.set(player.position.x, PLAYER_SIZE * 2, player.position.z + CELL_SIZE);
-camera.lookAt(player.position);
+// === Camera Positioning (Top-Down View) ===
+// Position the camera above the maze and look directly down.
+camera.position.set(0, MAZE_SIZE * CELL_SIZE, 0); // Position camera high above the maze
+camera.lookAt(0, 0, 0); // Look directly down at the center of the maze
 
 // === Controls ===
 const keys = {
@@ -195,17 +195,6 @@ function animate() {
     if (!detectCollision(deltaZ)) {
         player.position.add(deltaZ);
     }
-
-    // Update camera to follow the player smoothly
-    camera.position.lerp(
-        new THREE.Vector3(
-            player.position.x,
-            PLAYER_SIZE * 2,
-            player.position.z + CELL_SIZE
-        ),
-        0.1
-    );
-    camera.lookAt(player.position);
 
     renderer.render(scene, camera);
 }
