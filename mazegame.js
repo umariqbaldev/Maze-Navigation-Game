@@ -1,12 +1,12 @@
 
-// === Configuration ===
+// Configuration
 const MAZE_SIZE = 21; // Must be an odd number
 const CELL_SIZE = 5; // Size of each maze cell
 const WALL_HEIGHT = 5;
 const PLAYER_SIZE = 2;
 const MOVE_SPEED = 0.4;
 
-// === Three.js Setup ===
+// Three.js Setup
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x808080);
 
@@ -30,7 +30,7 @@ const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
 directionalLight.position.set(0, WALL_HEIGHT * 2, 0);
 scene.add(directionalLight);
 
-// === Maze Generation ===
+// Maze Generation 
 
 // Initialize maze grid
 let maze = [];
@@ -69,7 +69,7 @@ function generateMaze(x, y) {
 maze[1][1] = 0;
 generateMaze(1, 1);
 
-// === Render Maze ===
+// Render Maze
 const wallGeometry = new THREE.BoxGeometry(CELL_SIZE, WALL_HEIGHT, CELL_SIZE);
 const wallMaterial = new THREE.MeshStandardMaterial({ color: 0x0000ff });
 const walls = []; // To store wall meshes for collision detection
@@ -89,7 +89,7 @@ for (let y = 0; y < MAZE_SIZE; y++) {
     }
 }
 
-// === Player Setup ===
+// Player Setup
 const playerGeometry = new THREE.SphereGeometry(PLAYER_SIZE / 2, 32, 32);
 const playerMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000 });
 const player = new THREE.Mesh(playerGeometry, playerMaterial);
@@ -100,12 +100,12 @@ player.position.set(
 );
 scene.add(player);
 
-// === Camera Positioning (Top-Down View) ===
+// Camera Positioning (Top-Down View)
 // Position the camera above the maze and look directly down.
 camera.position.set(0, MAZE_SIZE * CELL_SIZE, 0); // Position camera high above the maze
 camera.lookAt(0, 0, 0); // Look directly down at the center of the maze
 
-// === Controls ===
+// Controls
 const keys = {
     w: false,
     a: false,
@@ -148,7 +148,7 @@ document.addEventListener('keyup', (event) => {
     }
 });
 
-// === Collision Detection ===
+// Collision Detection
 function detectCollision(newPosition) {
     const playerBox = new THREE.Box3().setFromObject(player);
     playerBox.translate(newPosition);
@@ -162,7 +162,7 @@ function detectCollision(newPosition) {
     return false;
 }
 
-// === Game Loop ===
+// Game Loop
 function animate() {
     requestAnimationFrame(animate);
 
@@ -201,7 +201,7 @@ function animate() {
 
 animate();
 
-// === Handle Window Resize ===
+// Handle Window Resize
 window.addEventListener('resize', () => {
     const width = window.innerWidth;
     const height = window.innerHeight;
